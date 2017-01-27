@@ -1,0 +1,21 @@
+#! /usr/local/bin/ruby
+#  /usr/bin/ruby
+
+require_relative 'retina_lexer'
+
+def main
+  ARGV[0] =~ /\w+\.rtn/                                     #Chequeo de extension
+  if $&.nil?; puts "Unknown file extension"; return; end
+  fichero = File.open(ARGV[0])
+  linea=fichero.gets
+  count=1
+  lexer=Lexer.new
+  while linea!=nil do
+    lexer.catch_lexeme(count, linea)
+    linea=fichero.gets
+    count=count+1
+  end
+  lexer.to_s
+end
+
+main
